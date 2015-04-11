@@ -31,19 +31,35 @@ public class Menu {
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.menus";
 
+        public static final int MENU_CODE = 1;
+
         public static final String KEY_NAME = "nama";
+
+        public static final int MENU_NAME_CODE = 11;
 
         public static final String KEY_VARIETY = "jenis";
 
+        public static final int MENU_VARIETY_CODE = 12;
+
         public static final String KEY_CHOLERSTEROL = "kolesterol";
+
+        public static final int MENU_CHOLESTEROL_CODE = 13;
 
         public static final String KEY_CALORIE = "kalori";
 
+        public static final int MENU_CALORIE_CODE = 14;
+
         public static final String KEY_CARBO = "karbohidrat";
+
+        public static final int MENU_CARBO_CODE = 15;
 
         public static final String KEY_FAT = "lemak";
 
+        public static final int MENU_FAT_CODE = 16;
+
         public static final String KEY_PROT = "protein";
+
+        public static final int MENU_PROT_CODE = 17;
     }
 
     public static String getNama(){

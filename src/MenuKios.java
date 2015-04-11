@@ -27,6 +27,8 @@ public class MenuKios {
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.kioskmenus";
 
+        public static final int MKIOSK_CODE = 2;
+
         public static final String KEY_KIOSK = "kios";
 
         public static final String KEY_MENU = "menu";

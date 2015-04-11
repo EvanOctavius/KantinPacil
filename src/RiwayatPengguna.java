@@ -32,6 +32,8 @@ public class RiwayatPengguna {
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.rps";
 
+        public static final int PHistory_CODE = 4;
+
         public static final String KEY_NAME = "pengguna";
 
         public static final String KEY_DATE = "tanggal";

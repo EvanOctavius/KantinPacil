@@ -23,6 +23,8 @@ public class Pengguna {
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.users";
 
+        public static final int USER_CODE = 3;
+
         public static final String KEY_UNAME = "username";
 
         public static final String KEY_NAME = "nama";

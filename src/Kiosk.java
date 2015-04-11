@@ -27,15 +27,27 @@ public class Kiosk {
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.kiosks";
 
+        public static final int KIOSK_CODE = 0;
+
         public static final String KEY_NO = "no";
+
+        public static final int KIOSK_NO_CODE = 01;
 
         public static final String KEY_NAME = "nama";
 
+        public static final int KIOSK_NAME_CODE = 02;
+
         public static final String KEY_TELP = "telepon";
+
+        public static final int KIOSK_TELP_CODE = 03;
 
         public static final String KEY_OWNER = "pemilik";
 
+        public static final int KIOSK_OWNER_CODE = 04;
+
         public static final String KEY_DESC = "keterangan";
+
+        public static final int KIOSK_DESC_CODE = 05;
     }
 
     public static int getNo(){

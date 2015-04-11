@@ -32,6 +32,8 @@ public class KomentarKios {
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.kioskcomments";
 
+        public static final int CKIOSK_CODE = 6;
+
         public static final String KEY_KIOSK = "kios";
 
         public static final String KEY_USER = "pengguna";
