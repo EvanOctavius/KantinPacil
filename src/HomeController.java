@@ -19,7 +19,9 @@ public class HomeController{
     }
 
     public HashMap<String,String> getKiosk(String id,ContentResolver contentResolver){
+        //Varibel penampung output
         HashMap<String,String> kiosk = new HashMap<>();
+        //Select Kolom yang ingin di ambil
         String[] mProjection =
                 {
                         Kiosk.Kiosks.KEY_NO,
@@ -28,19 +30,28 @@ public class HomeController{
                         Kiosk.Kiosks.KEY_DESC,
                         Kiosk.Kiosks.KEY_TELP
                 };
-
+        //Where KEY_NO = id
         String mSelectionClause = Kiosk.Kiosks.KEY_NO + " = ?";
         String[] mSelectionArgs = {id};
 
+        //execute query
+        //Kiosk.Kiosks.CONTENT_URI = tabel Kios
         Cursor c = contentResolver.query(Kiosk.Kiosks.CONTENT_URI, mProjection, mSelectionClause, mSelectionArgs, null);
+
+        //check apakah outputny tidak kosong
+        //Mengjalankan kursor ke hasil pertama
         if (c.moveToFirst()){
+            //Memproses output menampung kedalam variabel sesuai kolom
             kiosk.put(Kiosk.Kiosks.KEY_NO,c.getString(0));
             kiosk.put(Kiosk.Kiosks.KEY_OWNER,c.getString(1));
             kiosk.put(Kiosk.Kiosks.KEY_NAME,c.getString(2));
             kiosk.put(Kiosk.Kiosks.KEY_DESC,c.getString(3));
             kiosk.put(Kiosk.Kiosks.KEY_TELP,c.getString(4));
         }
-        Log.e("Masuk","Hasil = " + kiosk);
+
+        Log.e("getKiosk","Hasil = " + kiosk);
+
+        //return statement
         return kiosk;
     }
 
