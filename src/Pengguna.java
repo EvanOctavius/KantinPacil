@@ -19,7 +19,7 @@ public class Pengguna {
         private Users() {
         }
 
-        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/users");
+        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/Pengguna");
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.users";
 

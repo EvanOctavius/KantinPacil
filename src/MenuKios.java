@@ -23,7 +23,7 @@ public class MenuKios {
         private KioskMenus() {
         }
 
-        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/kioskmenus");
+        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/MenuKios");
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.kioskmenus";
 

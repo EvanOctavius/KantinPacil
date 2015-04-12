@@ -22,7 +22,7 @@ public class RiwayatLike {
         private RLs() {
         }
 
-        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/RLs");
+        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/RiwayatLike");
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.RLs";
 

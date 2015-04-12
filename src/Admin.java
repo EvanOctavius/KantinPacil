@@ -15,7 +15,7 @@ public class Admin {
         private Admins() {
         }
 
-        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/admins");
+        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/Admin");
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.admins";
 

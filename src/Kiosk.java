@@ -23,7 +23,7 @@ public class Kiosk {
         private Kiosks() {
         }
 
-        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/kiosks");
+        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/Kios");
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.kiosks";
 

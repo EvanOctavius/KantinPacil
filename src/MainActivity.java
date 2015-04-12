@@ -1,6 +1,7 @@
 package id.ac.ui.cs.ppl_c02.kantin;
 
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -20,14 +21,24 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DBContentProvider dH;
+
         setContentView(R.layout.activity_main);
+
+        Button viewK = (Button)findViewById(R.id.viewKiosk1);
+
+        final HomeController homeController = new HomeController();
+
+        viewK.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                homeController.getKiosk("02",getContentResolver());
+            }
+        });
+
         Button butt = (Button)findViewById(R.id.butt1);
 
         butt.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                new JSONParser().execute("http://ppl-c02.cs.ui.ac.id/index.php/json");
-                //Log.e("Coba",executeCmd("ping -c 5 -w 5 facebook.com", false));
+                new JSONParser().execute("http://ppl-c02.cs.ui.ac.id/index.php/json/json_kios");
             }
         });
 
@@ -36,8 +47,11 @@ public class MainActivity extends ActionBarActivity {
         butt2.setOnClickListener(new View.OnClickListener(){
             @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
             public void onClick(View v){
-                DBContentProvider db = new DBContentProvider(getApplicationContext());
-                Log.e("Coba",db.getReadAble().toString());
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED,true);
+                bundle.putBoolean(ContentResolver.SYNC_EXTRAS_FORCE,true);
+                bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL,true);
+                ContentResolver.requestSync(null,DBContentProvider.AUTHORITY,bundle);
             }
         });
     }

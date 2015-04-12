@@ -28,7 +28,7 @@ public class RiwayatPengguna {
         private RPs() {
         }
 
-        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/rps");
+        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/RiwayatPengguna");
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.rps";
 

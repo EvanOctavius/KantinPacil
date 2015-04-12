@@ -41,9 +41,7 @@ public class JSONParser extends AsyncTask {
             response = httpclient.execute(httpget);
             HttpEntity entity = response.getEntity();
             if(entity!= null) {
-                Log.e("1", "B");
                 is = entity.getContent();
-                Log.e("1", is.toString());
             }
             else{
 
@@ -69,7 +67,6 @@ public class JSONParser extends AsyncTask {
 
         try {
             jArray = new JSONArray(result);
-            Log.e("JSON", jArray.getJSONObject(1).getString("no"));
         } catch (JSONException e) {
             Log.e("log_tag", "Error parsing data " + e.toString());
         }

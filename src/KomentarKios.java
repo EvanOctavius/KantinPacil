@@ -28,7 +28,7 @@ public class KomentarKios {
         private KioskComments() {
         }
 
-        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/kioskcomments");
+        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/KomentarKios");
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.kioskcomments";
 

@@ -6,11 +6,15 @@ import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
+
+import java.util.HashMap;
 
 /**
  * Created by Evan Octavius S on 3/26/2015.
@@ -25,7 +29,11 @@ public class DBContentProvider extends ContentProvider {
 
     private Context mContext;
 
+    private static HashMap<String, String> values;
+
     private DatabaseHelper myDB;
+
+    private SQLiteDatabase db;
 
     private static final String DATABASE_NAME = "database",
     TABLE_MENU = "Menu",
@@ -52,10 +60,8 @@ public class DBContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, TABLE_ADMIN, Admin.Admins.ADMIN_CODE);
     }
 
-    public DBContentProvider(Context context) {
-        this.mContext = context;
-        myDB = new DatabaseHelper(mContext);
-        Log.e("DBC","Masuk");
+    public DBContentProvider(){
+
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -96,12 +102,59 @@ public class DBContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        return false;
+        mContext = getContext();
+        myDB = new DatabaseHelper(mContext);
+        return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
+        openDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        switch (uriMatcher.match(uri)) {
+            case Kiosk.Kiosks.KIOSK_CODE:
+                qb.setTables(TABLE_KIOSK);
+                qb.setProjectionMap(values);
+                break;
+            case Menu.Menus.MENU_CODE:
+                qb.setTables(TABLE_MENU);
+                qb.setProjectionMap(values);
+                break;
+            case MenuKios.KioskMenus.MKIOSK_CODE:
+                qb.setTables(TABLE_MKIOS);
+                qb.setProjectionMap(values);
+                break;
+            case Pengguna.Users.USER_CODE:
+                qb.setTables(TABLE_USER);
+                qb.setProjectionMap(values);
+                break;
+            case RiwayatPengguna.RPs.PHistory_CODE:
+                qb.setTables(TABLE_USER_HISTORY);
+                qb.setProjectionMap(values);
+                break;
+            case RiwayatLike.RLs.LHISTORY_CODE:
+                qb.setTables(TABLE_LIKE_HISTORY);
+                qb.setProjectionMap(values);
+                break;
+            case KomentarKios.KioskComments.CKIOSK_CODE:
+                qb.setTables(TABLE_CKIOS);
+                qb.setProjectionMap(values);
+                break;
+            case KomentarMenu.MenuComments.CMENU_CODE:
+                qb.setTables(TABLE_CMENU);
+                qb.setProjectionMap(values);
+                break;
+            case Admin.Admins.ADMIN_CODE:
+                qb.setTables(TABLE_ADMIN);
+                qb.setProjectionMap(values);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unsupported URI: " + uri);
+        }
+        Cursor c = qb.query(db, projection, selection, selectionArgs, null,null, sortOrder);
+        c.setNotificationUri(mContext.getContentResolver(), uri);
+        return c;
     }
 
     @Override
@@ -111,6 +164,41 @@ public class DBContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
+        openDatabase();
+        String tableName = "";
+        switch (uriMatcher.match(uri)) {
+            case Kiosk.Kiosks.KIOSK_CODE:
+                tableName = TABLE_KIOSK;
+                break;
+            case Menu.Menus.MENU_CODE:
+                tableName = TABLE_MENU;
+                break;
+            case MenuKios.KioskMenus.MKIOSK_CODE:
+                tableName = TABLE_MKIOS;
+                break;
+            case Pengguna.Users.USER_CODE:
+                tableName = TABLE_USER;
+                break;
+            case RiwayatPengguna.RPs.PHistory_CODE:
+                tableName = TABLE_USER_HISTORY;
+                break;
+            case RiwayatLike.RLs.LHISTORY_CODE:
+                tableName = TABLE_LIKE_HISTORY;
+                break;
+            case KomentarKios.KioskComments.CKIOSK_CODE:
+                tableName = TABLE_CKIOS;
+                break;
+            case KomentarMenu.MenuComments.CMENU_CODE:
+                tableName = TABLE_CMENU;
+                break;
+            case Admin.Admins.ADMIN_CODE:
+                tableName = TABLE_ADMIN;
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unsupported URI: " + uri);
+        }
+        long i = db.insert(tableName,null,values);
         return null;
     }
 
@@ -124,7 +212,12 @@ public class DBContentProvider extends ContentProvider {
         return 0;
     }
 
-    public SQLiteDatabase getReadAble(){
-        return myDB.getReadableDatabase();
+    public void openDatabase() throws SQLiteException{
+        try {
+            db = myDB.getWritableDatabase();
+        } catch (SQLiteException ex){
+            db = myDB.getReadableDatabase();
+        }
+
     }
 }

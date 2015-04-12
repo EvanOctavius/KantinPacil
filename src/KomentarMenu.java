@@ -29,7 +29,7 @@ public class KomentarMenu {
         private MenuComments() {
         }
 
-        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/menucomments");
+        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/KomentarMenu");
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.menucomments";
 

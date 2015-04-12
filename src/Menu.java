@@ -27,7 +27,7 @@ public class Menu {
         private Menus() {
         }
 
-        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/menus");
+        public static final Uri CONTENT_URI = Uri.parse("content://" + DBContentProvider.AUTHORITY + "/Menu");
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.menus";
 
