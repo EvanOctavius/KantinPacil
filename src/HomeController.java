@@ -17,7 +17,8 @@ public class HomeController{
     public HomeController(){
 
     }
-
+    
+    //Method untuk query melihat kios
     public HashMap<String,String> getKiosk(String id,ContentResolver contentResolver){
         //Varibel penampung output
         HashMap<String,String> kiosk = new HashMap<>();
@@ -54,9 +55,13 @@ public class HomeController{
         //return statement
         return kiosk;
     }
+    
+    //Method untuk query melihat menu
+    public ArrayList<HashMap<String,String>> getMenu(String id, ContentResolver contentResolver){
+        //Variabel penampung output
+        ArrayList<HashMap<String,String>> listMenu = new ArrayList<>();
 
-    public HashMap<String,String> getMenu(String id, ContentResolver contentResolver){
-        HashMap<String,String> menu = new HashMap<>();
+        //Select Kolom yang ingin di ambil
         String[] mProjection =
                 {
                         MenuKios.KioskMenus.KEY_KIOSK,
@@ -64,19 +69,37 @@ public class HomeController{
                         MenuKios.KioskMenus.KEY_COST,
                         MenuKios.KioskMenus.KEY_TOTAL
                 };
-        String mSelectionClause = Kiosk.Kiosks.KEY_NO + " = ?";
+
+        //Where KEY_KIOSK = id
+        String mSelectionClause = MenuKios.KioskMenus.KEY_KIOSK + " = ?";
         String[] mSelectionArgs = {id};
 
+        //execute query
+        //MenuKios.KioskMenus.CONTENT_URI = tabel menu kios
         Cursor c = contentResolver.query(MenuKios.KioskMenus.CONTENT_URI, mProjection,mSelectionClause,mSelectionArgs,null);
 
+        //iterasi cursor untuk memproses semua hasil query
         if (c.moveToFirst()){
-            do{
-                menu.put(MenuKios.KioskMenus.KEY_KIOSK,c.getString(0));
-                menu.put(MenuKios.KioskMenus.KEY_MENU,c.getString(1));
-                menu.put(MenuKios.KioskMenus.KEY_COST,c.getString(2));
-                menu.put(MenuKios.KioskMenus.KEY_TOTAL,c.getString(3));
-            } while(c.moveToNext());
+            do {
+                //temporary variabel
+                HashMap<String,String> menu = new HashMap<>();
+                menu.put(MenuKios.KioskMenus.KEY_KIOSK, c.getString(0));
+                menu.put(MenuKios.KioskMenus.KEY_MENU, c.getString(1));
+                menu.put(MenuKios.KioskMenus.KEY_COST, c.getString(2));
+                menu.put(MenuKios.KioskMenus.KEY_TOTAL, c.getString(3));
+                Log.e("Iterasi Menu",menu.toString());
+
+                //Masukan temporary varibel ke output akhir setiap iterasi
+                listMenu.add(menu);
+                Log.e("add ke list", listMenu.toString());
+            }while(c.moveToNext());
         }
-        return menu;
+
+        //tutup cursor
+        c.close();
+        Log.e("getMenu", "Hasil = " + listMenu.toString());
+
+        //return statement
+        return listMenu;
     }
 }
