@@ -56,7 +56,9 @@ public class DBContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, TABLE_USER_HISTORY, RiwayatPengguna.RPs.PHistory_CODE);
         uriMatcher.addURI(AUTHORITY, TABLE_LIKE_HISTORY, RiwayatLike.RLs.LHISTORY_CODE);
         uriMatcher.addURI(AUTHORITY, TABLE_CKIOS, KomentarKios.KioskComments.CKIOSK_CODE);
+        uriMatcher.addURI(AUTHORITY, TABLE_CKIOS, KomentarKios.KioskComments.CKIOSK_ID);
         uriMatcher.addURI(AUTHORITY, TABLE_CMENU, KomentarMenu.MenuComments.CMENU_CODE);
+        uriMatcher.addURI(AUTHORITY, TABLE_CMENU, KomentarMenu.MenuComments.CMENU_ID);
         uriMatcher.addURI(AUTHORITY, TABLE_ADMIN, Admin.Admins.ADMIN_CODE);
     }
 
@@ -199,17 +201,72 @@ public class DBContentProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
         long i = db.insert(tableName,null,values);
-        return null;
+        return uri;
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        int status = 0;
+        String tableName = "";
+        switch (uriMatcher.match(uri)) {
+            case KomentarKios.KioskComments.CKIOSK_CODE:
+                tableName = TABLE_CKIOS;
+                break;
+            case KomentarKios.KioskComments.CKIOSK_ID:
+                break;
+            case KomentarMenu.MenuComments.CMENU_CODE:
+                tableName = TABLE_CMENU;
+                break;
+            case KomentarMenu.MenuComments.CMENU_ID:
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unsupported URI: " + uri);
+        }
+        status = db.delete(tableName,selection,selectionArgs);
+        mContext.getContentResolver().notifyChange(uri,null);
+        return status;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        int status = 0;
+        String tableName = "";
+        switch (uriMatcher.match(uri)) {
+            case Kiosk.Kiosks.KIOSK_CODE:
+                tableName = TABLE_KIOSK;
+                break;
+            case Menu.Menus.MENU_CODE:
+                tableName = TABLE_MENU;
+                break;
+            case MenuKios.KioskMenus.MKIOSK_CODE:
+                tableName = TABLE_MKIOS;
+                break;
+            case Pengguna.Users.USER_CODE:
+                tableName = TABLE_USER;
+                break;
+            case RiwayatPengguna.RPs.PHistory_CODE:
+                tableName = TABLE_USER_HISTORY;
+                break;
+            case RiwayatLike.RLs.LHISTORY_CODE:
+                tableName = TABLE_LIKE_HISTORY;
+                break;
+            case KomentarKios.KioskComments.CKIOSK_CODE:
+                tableName = TABLE_CKIOS;
+                break;
+            case KomentarMenu.MenuComments.CMENU_CODE:
+                tableName = TABLE_CMENU;
+                break;
+            case Admin.Admins.ADMIN_CODE:
+                tableName = TABLE_ADMIN;
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unsupported URI: " + uri);
+        }
+        status = db.update(tableName,values,selection,selectionArgs);
+        mContext.getContentResolver().notifyChange(uri,null);
+        return status;
     }
 
     public void openDatabase() throws SQLiteException{
